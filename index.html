@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>仿xplan</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/main.css" />
+</head>
+<body onload="fakeProgress(0, progress, initEarth)">
+<div class="c-page">
+    <div class="c-page__wrapper">
+        <div class="c-loading">
+            <div class="c-loading__text"></div>
+            <div class="c-loading__orbits"></div>
+            <div id="progress" class="c-loading__progress">0%</div>
+            <div class="c-loading__tips">打开声音体验更佳</div>
+        </div>
+    </div>
+</div>
+<div class="c-page">
+    <div class="c-page__wrapper">
+        <div class="c-show">
+            <div class="c-earthCover">
+                <div class="c-earthCover__cover"></div>
+                <div class="c-earthCover__coord"></div>
+                <div class="c-earthCover__tips">
+                    <div class="c-earthCover__hand"></div>
+                </div>
+            </div>
+            <div class="c-earth" id="earth"></div>
+            <div class="c-clouds">
+                <div id="cloud" class="c-clouds__spriteContainer"></div>
+            </div>
+            <div class="c-videoSprite">
+                <video id="video" src="./media/video.mp4" class="c-videoSprite__video" x5-playsinline="" playsinline="" webkit-playsinline="true"></video>
+            </div>
+            <div class="c-actions">
+                <span class="c-actions__longPressText"></span>
+                <span id="longPress_btn" class="c-actions__longPress"></span>
+                <span class="c-actions__xplan"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="c-meteor" id="meteor"></div>
+<audio id="audio" src="./media/audio.mp3" autoplay="autoplay" loop="loop" style="display: none;"></audio>
+
+<script src="js/personal/loadingProgress.js"></script>
+<script src="js/personal/CenterIt.js"></script>
+
+<script src="js/three.js"></script>
+<script src="js/libs/stats.min.js"></script>
+<script src="js/libs/dat.gui.min.js"></script>
+<script src="js/shaders/CopyShader.js"></script>
+<script src="js/postprocessing/EffectComposer.js"></script>
+<script src="js/postprocessing/RenderPass.js"></script>
+<script src="js/postprocessing/ShaderPass.js"></script>
+<script src="js/controls/OrbitControls.js"></script>
+<script src="js/libs/tween.min.js"></script>
+
+<script src="js/personal/unit.js"></script>
+<script src="js/personal/Earth.js"></script>
+<script src="js/personal/Meteor.js"></script>
+<script src="js/personal/EarthController.js"></script>
+<script src="js/personal/MediaSprite.js"></script>
+<script src="js/personal/ImageSprite.js"></script>
+<script src="js/personal/LoadViewController.js"></script>
+<script src="js/personal/main.js"></script>
+
+</body>
+</html>

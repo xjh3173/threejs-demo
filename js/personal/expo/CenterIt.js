@@ -1,0 +1,166 @@
+/*!
+ * CenterIt.
+ * 
+ * Copyright (c) 2018-2019 xjh.
+ * Version: 1.0
+ * Company: http://www.chinadci.com
+ */
+
+/**
+ *
+ * @param options
+ * @returns {CenterIt}
+ */
+function CenterIt(options) {
+    options = options || {}
+    this.options = {
+        containerWidth: 100,
+        containerHeight: 100,
+        originWidth: 100,
+        originHeight: 100,
+        centerType: 'cover' // 'cover', 'contain'
+    }
+
+    for (var p in this.options) {
+        if (options[p] !== undefined) {
+            this.options[p] = options[p]
+        }
+    }
+
+    this._ratio = 1
+    this._newWidth = 0
+    this._newHeight = 0
+    this._offset = {top: 0, left: 0}
+
+    if (this.options.centerType === 'cover') {
+        this._coverCenter()
+    } else {
+        this._containCenter()
+    }
+}
+
+CenterIt.prototype = {
+    _coverCenter: function () {
+        var originWidth = this.options.originWidth
+        var originHeight = this.options.originHeight
+        var containerWidth = this.options.containerWidth
+        var containerHeight = this.options.containerHeight
+        var originRatio = originWidth / originHeight
+        var containerRatio = containerWidth / containerHeight
+        var ratio = 1
+
+        if (originRatio > containerRatio) { // left offset required
+            ratio = containerHeight / originHeight
+            this._newWidth = originWidth * ratio
+            this._newHeight = originHeight * ratio
+            this._offset = {
+                top: 0,
+                left: (this._newWidth - containerWidth) / -2
+            }
+        } else if (originRatio < containerRatio) { // top offset required
+            ratio = containerWidth / originWidth
+            this._newWidth = originWidth * ratio
+            this._newHeight = originHeight * ratio
+            this._offset = {
+                top: (this._newHeight - containerHeight) / -2,
+                left: 0
+            }
+        } else { // no offset required
+            ratio = containerWidth / originWidth
+            this._newWidth = originWidth * ratio
+            this._newHeight = originHeight * ratio
+            this._offset = {
+                top: 0,
+                left: 0
+            }
+        }
+        this._ratio = ratio
+    },
+
+    _containCenter: function () {
+        var originWidth = this.options.originWidth
+        var originHeight = this.options.originHeight
+        var containerWidth = this.options.containerWidth
+        var containerHeight = this.options.containerHeight
+        var originRatio = originWidth / originHeight
+        var containerRatio = containerWidth / containerHeight
+        var ratio = 1
+
+        if (originRatio > containerRatio) { // top offset required
+            ratio = containerWidth / originWidth
+            this._newWidth = originWidth * ratio
+            this._newHeight = originHeight * ratio
+            this._offset = {
+                top: (this._newHeight - containerHeight) / -2,
+                left: 0
+            }
+        } else if (originRatio < containerRatio) { // left offset required
+            ratio = containerHeight / originHeight
+            this._newWidth = originWidth * ratio
+            this._newHeight = originHeight * ratio
+            this._offset = {
+                top: 0,
+                left: (this._newWidth - containerWidth) / -2
+            }
+        } else { // no offset required
+            ratio = containerWidth / originWidth
+            this._newWidth = originWidth * ratio
+            this._newHeight = originHeight * ratio
+            this._offset = {
+                top: 0,
+                left: 0
+            }
+        }
+
+        this._ratio = ratio
+    },
+
+    ratio: function () {
+        return this._ratio
+    },
+
+    width: function () {
+        return this._newWidth
+    },
+
+    height: function () {
+        return this._newHeight
+    },
+
+    offset: function () {
+        return this._offset
+    },
+
+    setPosition: function (el) {
+        el.style.top = this.offset().top + 'px'
+        el.style.left = this.offset().left + 'px'
+        el.style.width = this.width() + 'px'
+        el.style.height = this.height() + 'px'
+    },
+
+    drawImage: function (context, image) {
+        if (this.options.centerType === 'cover') {
+            context.drawImage(
+                image,
+                this.offset().left * -1 / this.ratio(),
+                this.offset().top * -1 / this.ratio(),
+                this.options.containerWidth / this.ratio(),
+                this.options.containerHeight / this.ratio(),
+                0, 0,
+                this.options.containerWidth,
+                this.options.containerHeight
+            )
+        } else {
+            context.drawImage(
+                image,
+                0, 0,
+                this.options.containerWidth / this.ratio(),
+                this.options.containerHeight / this.ratio(),
+                this.offset().left / this.ratio(),
+                this.offset().top / this.ratio(),
+                this.options.containerWidth,
+                this.options.containerHeight
+            )
+        }
+    }
+};
