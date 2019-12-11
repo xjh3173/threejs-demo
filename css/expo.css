@@ -1,0 +1,508 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: none;
+}
+body {
+  /*background: #0c0604 url(../img/expo/earth_space.jpg) no-repeat center;*/
+  background: #0c0604;
+  background-size: cover;
+  background-position: 50%;
+}
+.c-meteor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  z-index: -1;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0
+}
+
+/* ----- loading ------ */
+.c-loading {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.c-loading__text {
+  position: absolute;
+  width: 93px;
+  height: 50px;
+  top: 50%;
+  left: 50%;
+  margin: -160px 0 0 -46.5px;
+  background-image: url(../img/bg_loading_text.png);
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.c-loading__orbits {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 227px;
+  height: 69px;
+  margin: -82px 0 0 -113.5px;
+  background-image: url(../img/expo/expo_logo.png);
+  background-size: 227px 69px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transition: all 1.4s ease;
+}
+.c-loading__tips {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: 75px;
+  width: 100%;
+  font-size: 10px;
+  text-align: center;
+  color: #c0d4ff;
+}
+.c-loading__progress {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  margin-top: 50px;
+  font-size: 12px;
+  text-align: center;
+  color: #fff;
+}
+
+/* ----- page ------ */
+.c-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.c-page__wrapper {
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  left: 50%;
+  width: 375px;
+  height: 600px;
+  margin: -300px 0 0 -187.5px;
+  overflow: hidden;
+}
+
+/* ----- show ------ */
+.c-show {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform: translateY(0px);
+  transition: transform 1s ease;
+}
+
+.c-show.low-position {
+  transform: translateY(60px);
+}
+
+/* show cover */
+.c-earthCover {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 200;
+}
+.c-backToOrigin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 140px;
+  height: 50px;
+  background-image: url(../img/btn_back.png);
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.c-earthCover__cover {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  width: 375px;
+  height: 600px;
+  margin: -300px 0 0 -187.5px;
+  background-image: url(../img/bg_index_cover.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  pointer-events: none;
+}
+.c-earthCover__tips {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 325px;
+  height: 89px;
+  margin: -35px 0 0 -162.5px;
+  background-image: url(../img/bg_tips.png);
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.c-earthCover__hand {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 16px;
+  height: 19px;
+  margin-left: -8px;
+  background-image: url(../img/hand.png);
+  background-size: cover;
+  animation: moveHand 2s linear infinite;
+}
+.c-earthCover__coord {
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 117px;
+  height: 18px;
+  margin: -253px 0 0 -58.5px;
+  background-size: 124px 95px;
+  background-image: url(../img/bg_coord.png);
+  background-repeat: no-repeat;
+  transition: all .5s linear;
+  -webkit-transform: translate3d(0, -10px, 0);
+  -webkit-transition: all .5s linear;
+}
+
+/* show earth */
+.c-earth {
+  opacity: 0;
+  position: absolute;
+  /*top: -40px; !* to let earth right at the center of cover image *!*/
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* clouds */
+.c-clouds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+.c-clouds__spriteContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+/* background video */
+.c-videoSprite {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+.c-videoSprite__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+/* show actions */
+.c-actions {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+}
+
+.c-actions__longPress {
+  position: absolute;
+  display: inline-block;
+  left: 138px;
+  bottom: 30px;
+  width: 99px;
+  height: 133px;
+  opacity: 0;
+  background-image: url(../img/btn_show.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: opacity .5s ease;
+}
+
+.c-actions__longPress.is-active {
+  opacity: 1;
+  animation: twinkle 2s linear infinite;
+}
+
+.c-actions__longPressText {
+  position: absolute;
+  display: inline-block;
+  left: 146px;
+  bottom: 136px;
+  width: 83px;
+  height: 27px;
+  opacity: 0;
+  background-image: url(../img/btn_show_text.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: opacity .5s ease;
+}
+
+.c-actions__longPressText.is-active {
+  opacity: 1;
+}
+
+.c-actions__xplan {
+  position: absolute;
+  display: inline-block;
+  opacity: 0;
+  right: 55px;
+  bottom: 52px;
+  width: 66px;
+  height: 70px;
+  background-image: url(../img/btn_end.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: opacity .5s ease;
+}
+
+.c-actions__xplan.is-active {
+  opacity: 1;
+}
+
+/* end cover */
+.c-endCover {
+  position: absolute;
+  top: -60px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+}
+
+.c-endCover__slogan {
+  position: absolute;
+  top: 20px;
+  left: 48px;
+  width: 279px;
+  height: 127px;
+  background-image: url(../img/end_slogan.png);
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0;
+  animation: fadeIn 1s linear 10s;
+  animation-fill-mode: forwards;
+}
+
+.c-endCover__texts {
+  position: absolute;
+  top: 40px;
+  left: 86px;
+  width: 203px;
+  height: 83px;
+  animation: fadeOut 1s linear 9s;
+  animation-fill-mode: forwards;
+}
+
+.c-endCover__text {
+  position: absolute;
+  width: 100%;
+  background-image: url(../img/end_text.png);
+  background-size: 203px 83px;
+  opacity: 0;
+}
+.c-endCover__text.line1 {
+  top: 0;
+  height: 18px;
+  background-position: 0 0;
+  animation: fadeIn 1s linear 1s;
+  animation-fill-mode: forwards;
+}
+.c-endCover__text.line2 {
+  top: 18px;
+  height: 22px;
+  background-position: 0 -18px;
+  animation: fadeIn 1s linear 3s;
+  animation-fill-mode: forwards;
+}
+.c-endCover__text.line3 {
+  top: 40px;
+  height: 22px;
+  background-position: 0 -40px;
+  animation: fadeIn 1s linear 5s;
+  animation-fill-mode: forwards;
+}
+.c-endCover__text.line4 {
+  top: 62px;
+  height: 21px;
+  background-position: 0 -62px;
+  animation: fadeIn 1s linear 7s;
+  animation-fill-mode: forwards;
+}
+
+.c-endCover__actions {
+  position: absolute;
+  left: 33px;
+  bottom: 40px;
+  width: 309px;
+  height: 50px;
+  opacity: 0;
+  animation: fadeIn 1s linear 10s;
+  animation-fill-mode: forwards;
+}
+.c-endCover__backBtn {
+  position: relative;
+  display: inline-block;
+  width: 140px;
+  height: 50px;
+  float: left;
+  background-image: url(../img/btn_back.png);
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.c-endCover__registerBtn {
+  position: relative;
+  display: inline-block;
+  width: 140px;
+  height: 50px;
+  float: right;
+  background-image: url(../img/btn_register.png);
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.c-innerGlow.is-active {
+  opacity: 1;
+  transition: opacity .6s ease;
+}
+
+.c-innerGlow {
+  position: absolute;
+  z-index: 10;
+  overflow: hidden;
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+  left: 50%;
+  top: 111px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.c-innerGlow img {
+  width: 100%;
+  transform: scale(1.05);
+}
+
+.fadeIn {
+  animation: fadeIn 0.5s linear both;
+  -webkit-animation: fadeIn 0.5s linear both;
+  -webkit-animation-fill-mode: both;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+.show {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-transition: all 0.5s linear;
+}
+
+.hide {
+  opacity: 0;
+  -webkit-transition: opacity 0.5s linear;
+}
+
+.toBottom {
+  transform: translateY(360%);
+}
+
+/* animations */
+@keyframes moveHand {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+  25% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+  }
+  50% {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+  75% {
+    -webkit-transform: translate3d(10px, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
